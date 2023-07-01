@@ -12,6 +12,7 @@ import Doctor from '../User/containers/Doctor';
 import Auth from '../User/containers/Auth';
 import VisitingDoctors from '../User/containers/VisitingDoctors';
 import NotFound from '../User/containers/NotFound';
+import Medicine_User from '../User/containers/Medicine_User';
 
 function UserRoute(props) {
     return (
@@ -33,6 +34,7 @@ function UserRoute(props) {
                 </Route>
                 <Route path='*' element={<NotFound />} />
                 <Route path='/auth' element={<Auth />} />
+                <Route path='/medicine' element={<Medicine_User />} />
             </Routes>
             <Footer />
         </>

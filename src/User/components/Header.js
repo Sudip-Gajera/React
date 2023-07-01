@@ -29,6 +29,7 @@ function Header(props) {
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
                             <li><Link class="nav-link scrollto active" to="/">Home</Link></li>
+                            <li><Link class="nav-link scrollto" to="/medicine">Medicine</Link></li>
                             <li><Link class="nav-link scrollto" to="/department">Departments</Link></li>
                             <li><Link class="nav-link scrollto" to="/doctors">Doctors</Link></li>
                             <li><Link class="nav-link scrollto " to="/about">About</Link></li>

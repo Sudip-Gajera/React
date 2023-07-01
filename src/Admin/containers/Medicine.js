@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -12,15 +12,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-
-
-
-
-
 export default function Medicine() {
 
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);  //1
+    const [update, setUpdate] = React.useState(false);
+
     //3   5
     React.useEffect(() => {
         let localdata = JSON.parse(localStorage.getItem("medicine"));
@@ -29,20 +26,9 @@ export default function Medicine() {
         }
     }, [])
 
-    const handleRemove = (id) => {
-        console.log("AAA", id);
-        let localdata = JSON.parse(localStorage.getItem("medicine"));
-        let fData = localdata.filter((v, i) => v.id !== id);
-        localStorage.setItem("medicine", JSON.stringify(fData));
-        setData(fData);
-    }
-
-    const handleEdit =(p) => {
-        console.log("AAAAAA",p);
-    }
-
     const handleClickOpen = () => {
         setOpen(true);
+        setUpdate(false);
     };
 
     const handleClose = () => {
@@ -64,6 +50,28 @@ export default function Medicine() {
             setData(localdata);
         }
         handleClose();
+    }
+
+    const handleRemove = (id) => {
+        // console.log("AAA", id);
+        let localdata = JSON.parse(localStorage.getItem("medicine"));
+        let fData = localdata.filter((v, i) => v.id !== id);
+        localStorage.setItem("medicine", JSON.stringify(fData));
+        setData(fData);
+    }
+
+    const handleEdit = (data) => {
+        // console.log("AAAAAA",p);
+        setValues(data);
+        handleClickOpen();
+        setData(data);
+        setUpdate(true);
+        setValues({
+            name: data.name,
+            date: data.date,
+            price: data.price,
+            disc: data.disc,
+        })
     }
 
     let d = new Date();
@@ -101,7 +109,7 @@ export default function Medicine() {
         },
     });
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik;
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setValues } = formik;
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
@@ -124,11 +132,11 @@ export default function Medicine() {
             headerName: 'Action',
             renderCell: (params) => (
                 <>
-                    <IconButton aria-label="delete" color="error" onClick={() => handleRemove(params.row.id)}>
-                        <DeleteIcon />
-                    </IconButton>
                     <IconButton aria-label="update" color="success" onClick={() => handleEdit(params.row)}>
                         <EditIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" color="error" onClick={() => handleRemove(params.row.id)}>
+                        <DeleteIcon />
                     </IconButton>
                 </>
             )
@@ -143,7 +151,7 @@ export default function Medicine() {
                 Add Medicine
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add Medicine</DialogTitle>
+                <DialogTitle>{update ? "Edit Medicine Data" : "Add Medicine"}</DialogTitle>
                 <form action='#' method='post' onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
@@ -197,7 +205,7 @@ export default function Medicine() {
                         <span className='err'>{errors.disc && touched.disc ? errors.disc : ''}</span>
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit'>{update ? "Save" : "Submit"}</Button>
                         </DialogActions>
                     </DialogContent>
                 </form>
