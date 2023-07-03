@@ -145,11 +145,13 @@ export default function Medicine() {
 
     //2  4
     return (
-        <div className='text-center'>
+        <div>
+            <div>
             <h1>Medicine Part</h1>
             <Button variant="outlined" onClick={handleClickOpen}>
                 Add Medicine
             </Button>
+            </div>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{update ? "Edit Medicine Data" : "Add Medicine"}</DialogTitle>
                 <form action='#' method='post' onSubmit={handleSubmit}>
@@ -219,7 +221,7 @@ export default function Medicine() {
                     //         paginationModel: { page: 0, pageSize: 5 },
                     //     },
                     // }}
-                    pageSizeOptions={[5, 10]}
+                    // pageSizeOptions={[5, 10]}
                 // checkboxSelection
                 />
             </div>
