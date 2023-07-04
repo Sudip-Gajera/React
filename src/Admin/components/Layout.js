@@ -89,12 +89,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-// const useStyles = makeStyles({
-//   mybox: {
-//     color: 'red',
-//   },
-// });
-
 export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -111,9 +105,6 @@ export default function MiniDrawer({ children }) {
     { lable: 'medicine', icon: <LocalHospitalIcon sx={{ color: '#FF6337'}} />, to: '/Admin/medicine' },
     { lable: 'doctor', icon: <PeopleAltIcon sx={{ color: '#FF6337'}} />, to: '/Admin/doctor' }
   ]
-
-  // const classes = useStyles();
-  // className ={classes.mybox} 
 
   return (
     <Box sx={{ display: 'flex'}}>

@@ -16,9 +16,11 @@ export default function Medicine() {
 
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);  //1
-    const [update, setUpdate] = React.useState(false);
+    // const [update, setUpdate] = React.useState(false);
+    const [updatedata, setUpdateData] = React.useState(null);
 
     //3   5
+
     React.useEffect(() => {
         let localdata = JSON.parse(localStorage.getItem("medicine"));
         if (localdata !== null) {
@@ -28,14 +30,14 @@ export default function Medicine() {
 
     const handleClickOpen = () => {
         setOpen(true);
-        setUpdate(false);
+        // setUpdate(false);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleAdd = (data) => {
+    const handleSubmitData = (data) => {
         let localdata = JSON.parse(localStorage.getItem("medicine"));
 
         let rNo = Math.floor(Math.random() * 100);
@@ -45,11 +47,25 @@ export default function Medicine() {
             localStorage.setItem("medicine", JSON.stringify([newData]));
             setData([newData]);
         } else {
-            localdata.push(newData);
-            localStorage.setItem("medicine", JSON.stringify(localdata));
-            setData(localdata);
+            if(updatedata){
+                let udata = localStorage.map((v)=> {
+                    if (v.id == data.id) {
+                        return data;
+                    } else {
+                        return v;
+                    }
+                })
+                localStorage.setItem("medicine", JSON.stringify(udata));
+                setData(udata);
+            } else{
+                localdata.push(newData);
+                localStorage.setItem("medicine", JSON.stringify(localdata));
+                setData(localdata);
+            }
+            
         }
         handleClose();
+        setUpdateData(null);
     }
 
     const handleRemove = (id) => {
@@ -63,15 +79,10 @@ export default function Medicine() {
     const handleEdit = (data) => {
         // console.log("AAAAAA",p);
         setValues(data);
+        setUpdateData(data);
         handleClickOpen();
-        setData(data);
-        setUpdate(true);
-        setValues({
-            name: data.name,
-            date: data.date,
-            price: data.price,
-            disc: data.disc,
-        })
+        // setData(data);
+        // setUpdate(true);
     }
 
     let d = new Date();
@@ -104,8 +115,8 @@ export default function Medicine() {
             disc: '',
         },
         onSubmit: (values, action) => {
-            handleAdd(values);
             action.resetForm();
+            handleSubmitData(values);
         },
     });
 
@@ -153,7 +164,8 @@ export default function Medicine() {
             </Button>
             </div>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{update ? "Edit Medicine Data" : "Add Medicine"}</DialogTitle>
+                {/* <DialogTitle>{update ? "Edit Medicine Data" : "Add Medicine"}</DialogTitle> */}
+                <DialogTitle>Add Medicine</DialogTitle>
                 <form action='#' method='post' onSubmit={handleSubmit}>
                     <DialogContent>
                         <TextField
@@ -207,7 +219,8 @@ export default function Medicine() {
                         <span className='err'>{errors.disc && touched.disc ? errors.disc : ''}</span>
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type='submit'>{update ? "Save" : "Submit"}</Button>
+                            {/* <Button type='submit'>{update ? "Save" : "Submit"}</Button> */}
+                            <Button type='submit'>Submit</Button>
                         </DialogActions>
                     </DialogContent>
                 </form>
@@ -216,13 +229,13 @@ export default function Medicine() {
                 <DataGrid
                     rows={data}
                     columns={columns}
-                    // initialState={{
-                    //     pagination: {
-                    //         paginationModel: { page: 0, pageSize: 5 },
-                    //     },
-                    // }}
-                    // pageSizeOptions={[5, 10]}
-                // checkboxSelection
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                checkboxSelection
                 />
             </div>
         </div>
