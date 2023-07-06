@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router';
 
 function Auth(props) {
 
     const [authtype, setAuthType] = useState('login');
+    let navigate = useNavigate();
+
+    const handleLogin = () => {
+        let LoginData = localStorage.setItem('login', 'true');
+        navigate('/');
+    }
 
     let authObj = {}, initVal = {};
 
@@ -61,7 +68,9 @@ function Auth(props) {
         onSubmit: (values, action) => {
             console.log(values);
             action.resetForm();
-            alert(values);
+            if(authtype === 'login'){
+                handleLogin()
+            }
         },
     });
 

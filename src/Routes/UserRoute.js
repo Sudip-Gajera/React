@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Header from '../User/components/Header';
 import Footer from '../User/components/Footer';
 import Home from '../User/containers/Home';
@@ -20,7 +20,7 @@ function UserRoute(props) {
         <>
             <Header />
             <Routes>
-                <Route path='/' element={<Home/>} />
+                <Route path='/' element={<Home />} />
                 <Route path='/department' element={<Department />} />
                 <Route path='/doctors' element={<Doctors />} />
                 <Route path='/about' element={<About />} />
@@ -35,7 +35,9 @@ function UserRoute(props) {
                 </Route>
                 <Route path='*' element={<NotFound />} />
                 <Route path='/auth' element={<Auth />} />
-                <Route path='/medicine' element={<PrivateRoute Component={Medicines} />} />
+                <Route element={<PrivateRoute />}>
+                    <Route path='/medicine' element={<Medicines />} />
+                </Route>
             </Routes>
             <Footer />
         </>

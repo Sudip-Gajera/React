@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 
-function PrivateRoute({Component}) {
-    const navigate = useNavigate();
-    useEffect(()=> {
+function PrivateRoute() {
         let login = localStorage.getItem('login');
-        if (!login) {
-            navigate('/auth')
-        }
-    },[])
     return (
-        <div>
-           <Component /> 
-        </div>
+        login? <Outlet /> : <Navigate to={"/auth"}/>
     );
 }
 

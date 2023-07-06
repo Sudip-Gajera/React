@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
+    let login = localStorage.getItem("login");
+
+    const handleRemove = () => {
+        localStorage.removeItem('login');
+    }
     return (
         <div className="main-header">
             <div id="topbar" className="d-flex align-items-center fixed-top">
@@ -39,9 +44,14 @@ function Header(props) {
                     </nav>
                     <Link to="/appointment" className="appointment-btn scrollto"><span className="d-none d-md-inline">Make an</span>
                         Appointment</Link>
-                    <Link to="/auth" className="appointment-btn scrollto">
+                        {
+                            login? <Link to="/auth" className="appointment-btn scrollto" onClick={handleRemove}>
+                            <span className="d-none d-md-inline">Logout</span>
+                        </Link> :
+                        <Link to="/auth" className="appointment-btn scrollto">
                         <span className="d-none d-md-inline">Login/ Signup</span>
                     </Link>
+                        }
                 </div>
             </header>
         </div>
