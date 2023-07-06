@@ -13,13 +13,14 @@ import Auth from '../User/containers/Auth';
 import VisitingDoctors from '../User/containers/VisitingDoctors';
 import NotFound from '../User/containers/NotFound';
 import Medicines from '../User/Medicine/Medicines';
+import PrivateRoute from './PrivateRoute';
 
 function UserRoute(props) {
     return (
         <>
             <Header />
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Home/>} />
                 <Route path='/department' element={<Department />} />
                 <Route path='/doctors' element={<Doctors />} />
                 <Route path='/about' element={<About />} />
@@ -34,7 +35,7 @@ function UserRoute(props) {
                 </Route>
                 <Route path='*' element={<NotFound />} />
                 <Route path='/auth' element={<Auth />} />
-                <Route path='/medicine' element={<Medicines />} />
+                <Route path='/medicine' element={<PrivateRoute Component={Medicines} />} />
             </Routes>
             <Footer />
         </>

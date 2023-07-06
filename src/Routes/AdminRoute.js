@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../Admin/components/Layout';
 import { Route, Routes } from 'react-router';
 import Doctors from '../Admin/containers/Doctors';
-import Medicine from '../Admin/containers/Medicine';
+import Medicine from '../Admin/containers/Medicine/Medicine';
 
 function AdminRoute(props) {
     return (
