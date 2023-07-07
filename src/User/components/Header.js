@@ -44,14 +44,14 @@ function Header(props) {
                     </nav>
                     <Link to="/appointment" className="appointment-btn scrollto"><span className="d-none d-md-inline">Make an</span>
                         Appointment</Link>
-                        {
-                            login? <Link to="/auth" className="appointment-btn scrollto" onClick={handleRemove}>
+                    {
+                        login ? <Link to="/auth" className="appointment-btn scrollto" onClick={handleRemove}>
                             <span className="d-none d-md-inline">Logout</span>
                         </Link> :
-                        <Link to="/auth" className="appointment-btn scrollto">
-                        <span className="d-none d-md-inline">Login/ Signup</span>
-                    </Link>
-                        }
+                            <Link to="/auth" className="appointment-btn scrollto">
+                                <span className="d-none d-md-inline">Login/ Signup</span>
+                            </Link>
+                    }
                 </div>
             </header>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router';
+import Button from '../components/UI/Button/Button';
 
 function Auth(props) {
 
@@ -68,7 +69,7 @@ function Auth(props) {
         onSubmit: (values, action) => {
             console.log(values);
             action.resetForm();
-            if(authtype === 'login'){
+            if (authtype === 'login') {
                 handleLogin()
             }
         },
@@ -131,10 +132,16 @@ function Auth(props) {
                     </div>
 
                     <div className="text-center">
-                        {
+                        {/* {
                             authtype === 'login' ? <button type="submit">Login</button> :
                                 authtype === 'signup' ? <button type="submit">SignUp</button> :
                                     <button type="submit">Submit</button>
+                        } */}
+                        {
+                            // authtype === 'login' ? <CustomButton val={'Login'} /> :
+                            authtype === 'login' ? <Button type='primary' btnDisable='true'>Login</Button> :
+                                authtype === 'signup' ? <Button type='secondary'>SignUp</Button> :
+                                <Button type='outlined'>Submit</Button>
                         }
                     </div>
                     <div className="text-center">
