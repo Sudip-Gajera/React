@@ -14,6 +14,7 @@ import VisitingDoctors from '../User/containers/VisitingDoctors';
 import NotFound from '../User/containers/NotFound';
 import Medicines from '../User/Medicine/Medicines';
 import PrivateRoute from './PrivateRoute';
+import Counter from '../User/containers/counter/Counter';
 
 function UserRoute(props) {
     return (
@@ -25,6 +26,7 @@ function UserRoute(props) {
                 <Route path='/doctors' element={<Doctors />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/contact' element={<Contact />} />
+                <Route path='/counter' element={<Counter />} />
                 <Route path='/appointment' element={<Appointment />} />
                 {/* <Route path='/doctor/:id' element={<Doctor />} />
                 <Route path='/doctor/visiting_doctors' element={<VisitingDoctors />} /> */}

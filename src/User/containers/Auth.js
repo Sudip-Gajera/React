@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router';
 import Button from '../components/UI/Button/Button';
+import Input from '../components/UI/Input/Input';
+import Heading from '../components/UI/Heading/Heading';
 
 function Auth(props) {
 
@@ -82,8 +84,10 @@ function Auth(props) {
             <div className="container">
                 <div className="section-title">
                     {
-                        authtype === 'login' ? <h2>Login</h2> :
-                            authtype === 'signup' ? <h2>SignUp</h2> : <h2>Reset Password</h2>
+                        authtype === 'login' ? <Heading type='title'>Login</Heading> :
+                            // authtype === 'login' ? <h2>Login</h2> :
+                            // authtype === 'signup' ? <h2>SignUp</h2> : <h2>Reset Password</h2>
+                            authtype === 'signup' ? <Heading type='title'>SignUp</Heading> : <Heading type='title'>Reset Password</Heading>
                     }
                 </div>
                 <form action method="post" role="form" className="php-email-form" onSubmit={handleSubmit}>
@@ -91,43 +95,39 @@ function Auth(props) {
                         {
                             authtype === 'login' || authtype === 'forgot' ? null :
                                 <div className="col-md-7 form-group">
-                                    <input type="text"
+                                    <Input type="text"
                                         name="name"
-                                        className="form-control"
                                         id="name"
                                         value={values.name}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        placeholder="Your Name" />
-                                    <span className='err'>{errors.name && touched.name ? errors.name : ''}</span>
+                                        placeholder="Your Name"
+                                        errorText={errors.name && touched.name ? errors.name : ''} />
                                 </div>
                         }
                         <div className="col-md-7 form-group mt-3 mt-md-0">
-                            <input type="email"
-                                className="form-control"
+                            <Input type="email"
                                 name="email"
                                 id="email"
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                placeholder="Your Email" />
-                            <span className='err'>{errors.email && touched.email ? errors.email : ''}</span>
+                                placeholder="Your Email"
+                                errorText={errors.email && touched.email ? errors.email : ''} />
                         </div>
                         {
                             authtype !== "forgot" ?
                                 <div className="col-md-7 form-group mt-3 mt-md-0">
-                                    <input type="password"
-                                        className="form-control"
+                                    <Input type="password"
                                         name="password"
                                         id="password"
                                         value={values.password}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        placeholder="Your Password" />
-                                    <span className='err'>{errors.password && touched.password ? errors.password : ''}</span>
+                                        placeholder="Your Password"
+                                        errorText={errors.password && touched.password ? errors.password : ''} />
                                 </div> :
                                 null
-
                         }
                     </div>
 
@@ -141,7 +141,7 @@ function Auth(props) {
                             // authtype === 'login' ? <CustomButton val={'Login'} /> :
                             authtype === 'login' ? <Button type='primary' btnDisable='true'>Login</Button> :
                                 authtype === 'signup' ? <Button type='secondary'>SignUp</Button> :
-                                <Button type='outlined'>Submit</Button>
+                                    <Button type='outlined'>Submit</Button>
                         }
                     </div>
                     <div className="text-center">

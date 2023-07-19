@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Links } from './UI/Link/Link.style';
 
 function Header(props) {
     let login = localStorage.getItem("login");
@@ -12,14 +13,14 @@ function Header(props) {
             <div id="topbar" className="d-flex align-items-center fixed-top">
                 <div className="container d-flex justify-content-between">
                     <div className="contact-info d-flex align-items-center">
-                        <i className="bi bi-envelope" /> <a href="mailto:contact@example.com">cityhospital@example.com</a>
+                        <i className="bi bi-envelope" /> <Links href="mailto:contact@example.com">cityhospital@example.com</Links>
                         <i className="bi bi-phone" /> +91 9988776655
                     </div>
                     <div className="d-none d-lg-flex social-links align-items-center">
-                        <a href="#" className="twitter"><i className="bi bi-twitter" /></a>
-                        <a href="#" className="facebook"><i className="bi bi-facebook" /></a>
-                        <a href="#" className="instagram"><i className="bi bi-instagram" /></a>
-                        <a href="#" className="linkedin"><i className="bi bi-linkedin" /></a>
+                        <Links href="#" className="twitter"><i className="bi bi-twitter" /></Links>
+                        <Links href="#" className="facebook"><i className="bi bi-facebook" /></Links>
+                        <Links href="#" className="instagram"><i className="bi bi-instagram" /></Links>
+                        <Links href="#" className="linkedin"><i className="bi bi-linkedin" /></Links>
                     </div>
                 </div>
             </div>
@@ -39,6 +40,7 @@ function Header(props) {
                             <li><Link class="nav-link scrollto" to="/doctors">Doctors</Link></li>
                             <li><Link class="nav-link scrollto " to="/about">About</Link></li>
                             <li><Link class="nav-link scrollto" to="/contact">Contact</Link></li>
+                            <li><Link class="nav-link scrollto" to="/counter">Counter</Link></li>
                         </ul>
                         <i className="bi bi-list mobile-nav-toggle" />
                     </nav>

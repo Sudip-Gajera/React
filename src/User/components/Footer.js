@@ -1,4 +1,5 @@
 import React from 'react';
+import { Links } from './UI/Link/Link.style';
 
 function Footer(props) {
     return (
@@ -17,11 +18,11 @@ function Footer(props) {
                     </div>
                 </div>
                 <div className="social-links text-center text-md-right pt-3 pt-md-0">
-                    <a href="#" className="twitter"><i className="bx bxl-twitter" /></a>
-                    <a href="#" className="facebook"><i className="bx bxl-facebook" /></a>
-                    <a href="#" className="instagram"><i className="bx bxl-instagram" /></a>
-                    <a href="#" className="google-plus"><i className="bx bxl-skype" /></a>
-                    <a href="#" className="linkedin"><i className="bx bxl-linkedin" /></a>
+                    <Links href="#" className="twitter"><i className="bx bxl-twitter" /></Links>
+                    <Links href="#" className="facebook"><i className="bx bxl-facebook" /></Links>
+                    <Links href="#" className="instagram"><i className="bx bxl-instagram" /></Links>
+                    <Links href="#" className="google-plus"><i className="bx bxl-skype" /></Links>
+                    <Links href="#" className="linkedin"><i className="bx bxl-linkedin" /></Links>
                 </div>
             </div>
         </footer>
