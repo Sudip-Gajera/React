@@ -1,9 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Links } from './UI/Link/Link.style';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useSelector } from 'react-redux';
+
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
+
+
 
 function Header(props) {
     let login = localStorage.getItem("login");
+
+    let cartData = useSelector((state) => state.cart);
+    let cartCounter = 0;
+    if (cartData) {
+        cartCounter = cartData.item.reduce((acc, v, i) => acc + v.qty, 0);
+    }
 
     const handleRemove = () => {
         localStorage.removeItem('login');
@@ -17,6 +40,13 @@ function Header(props) {
                         <i className="bi bi-phone" /> +91 9988776655
                     </div>
                     <div className="d-none d-lg-flex social-links align-items-center">
+                        <Link to="cart">
+                            <IconButton aria-label="cart">
+                                <StyledBadge badgeContent={cartCounter} color="secondary">
+                                    <ShoppingCartIcon />
+                                </StyledBadge>
+                            </IconButton>
+                        </Link>
                         <Links href="#" className="twitter"><i className="bi bi-twitter" /></Links>
                         <Links href="#" className="facebook"><i className="bi bi-facebook" /></Links>
                         <Links href="#" className="instagram"><i className="bi bi-instagram" /></Links>

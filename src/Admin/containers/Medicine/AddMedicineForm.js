@@ -16,9 +16,7 @@ function AddMedicineForm({ onHandleSubmit , onUpdate}) {
             setValues(onUpdate);
             handleClickOpen();
         }
-        
     },[onUpdate])
-
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,7 +32,7 @@ function AddMedicineForm({ onHandleSubmit , onUpdate}) {
     let medicineSchema = Yup.object({
         name: Yup.string()
             .required('Please enter Medicine Name'),
-        disc: Yup.string().required('Please enter your message').test('disc', 'Max 10 Words allow',
+            desc: Yup.string().required('Please enter your message').test('disc', 'Max 10 Words allow',
             function (val) {
                 let arr = val.split(" ");
 
@@ -45,22 +43,24 @@ function AddMedicineForm({ onHandleSubmit , onUpdate}) {
                 }
             }),
         // date: Yup.date().required('Please Select Exp. Date').min(new Date(), 'Please Enter Valid Date'),
-        date: Yup.date().required('Please Select Exp. Date').min(nd, 'Please Enter Valid Date'),
-        price: Yup.number().required('Please Enter Price').min(0, "You must be at least 0")
+        expiry: Yup.date().required('Please Select Exp. Date').min(nd, 'Please Enter Valid Date'),
+        price: Yup.number().required('Please Enter Price').min(0, "You must be at least 0"),
+        desc: Yup.string().required('Please Enter Description')
     });
 
     const formik = useFormik({
         validationSchema: medicineSchema,
         initialValues: {
             name: '',
-            date: '',
+            expiry: '',
             price: '',
-            disc: '',
+            desc: '',
         },
         onSubmit: (values, action) => {
             onHandleSubmit(values);
             action.resetForm();
             handleClose();
+            console.log(values);
         },
     });
 
@@ -91,15 +91,15 @@ function AddMedicineForm({ onHandleSubmit , onUpdate}) {
                         <span className='err'>{errors.name && touched.name ? errors.name : ''}</span>
                         <TextField
                             margin="dense"
-                            id="date"
+                            id="expiry"
                             type="date"
                             fullWidth
                             variant="standard"
-                            value={values.date}
+                            value={values.expiry}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        <span className='err'>{errors.date && touched.date ? errors.date : ''}</span>
+                        <span className='err'>{errors.expiry && touched.expiry ? errors.expiry : ''}</span>
                         <TextField
                             margin="dense"
                             id="price"
@@ -114,20 +114,20 @@ function AddMedicineForm({ onHandleSubmit , onUpdate}) {
                         <span className='err'>{errors.price && touched.price ? errors.price : ''}</span>
                         <TextField
                             margin="dense"
-                            id="disc"
+                            id="desc"
                             label="Description"
                             type="text"
                             fullWidth
                             variant="standard"
                             placeholder='Description'
-                            value={values.disc}
+                            value={values.desc}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        <span className='err'>{errors.disc && touched.disc ? errors.disc : ''}</span>
+                        <span className='err'>{errors.desc && touched.desc ? errors.desc : ''}</span>
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit'>Add</Button>
                         </DialogActions>
                     </DialogContent>
                 </form>

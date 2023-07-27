@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import ListMedicines from './ListMedicines';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMedicineData } from '../../redux/action/medicine.action';
+import Input from '../components/UI/Input/Input';
+import { addtoCart } from '../../redux/action/cart.action';
 
 function Medicines(props) {
-    const [data, setData] = useState([]);
+    const dispatch = useDispatch();
+    const medicineData = useSelector((state) => state.medicineData)
+
     const [filterData, setFilterData] = useState([]); 
 
     useEffect(() => {
-        let localData = JSON.parse(localStorage.getItem("medicine"));
-        if (localData !== null) {
-            setData(localData);
-        }
+        dispatch(getMedicineData());
     }, [])
 
-    const handleSearch = (val) => {
-        let localData = JSON.parse(localStorage.getItem("medicine"));
+    const handleCart = (id) => {
+        dispatch(addtoCart(id));
+        console.log("handleCart called", id);
+    }
 
-        let fData = localData.filter((v) => 
+    const handleSearch = (val) => {
+        let mdata = medicineData.medicineData
+        let fData =  mdata.filter((v) => 
             v.name.toLowerCase().includes(val.toLowerCase()) ||
             v.price.toString().includes(val) ||
-            v.date.toString().includes(val) ||
-            v.disc.toLowerCase().includes(val.toLowerCase)
+            v.expiry.toString().includes(val) ||
+            v.desc.toLowerCase().includes(val.toLowerCase)
         )
 
         console.log(fData);
@@ -36,8 +43,11 @@ function Medicines(props) {
                         luctus at neque. Mauris sit amet massa sed orci vehicula facilisis.</p>
                 </div>
                 <div className='row g-3'>
-                    <input type='search' name='search' onChange={(e) => handleSearch(e.target.value)} />
-                    <ListMedicines mData={filterData.length > 0 ? filterData: data} />
+                    <Input type='search' name='search' onChange={(e) => handleSearch(e.target.value)}/>
+                    <ListMedicines 
+                        mData={filterData.length > 0 ? filterData: medicineData.medicineData} 
+                        handleCart1 = {handleCart}
+                        />
                 </div>
             </div>
         </section>

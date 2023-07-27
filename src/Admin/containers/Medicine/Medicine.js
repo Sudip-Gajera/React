@@ -1,97 +1,68 @@
 import React, { useEffect, useState } from 'react';
-
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddMedicineForm from './AddMedicineForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { addMedicineData, deleteMedicineData, getMedicineData, updateMedicineData } from '../../../redux/action/medicine.action';
 
 export default function Medicine() {
-    //1
-    const [data, setData] = React.useState([]);
     const [updatedata, setUpdateData] = React.useState(null);
 
-    //3   5
+    const dispatch = useDispatch();
+    const medicineData = useSelector(state => state.medicineData)
 
     React.useEffect(() => {
-        let localdata = JSON.parse(localStorage.getItem("medicine"));
-        if (localdata !== null) {
-            setData(localdata);
-        }
+        dispatch(getMedicineData());
     }, [])
 
-
-
     const handleSubmitData = (data) => {
-        let localdata = JSON.parse(localStorage.getItem("medicine"));
-
-        let rNo = Math.floor(Math.random() * 100);
-        let newData = { id: rNo, ...data };
-
-        if (localdata === null) {
-            localStorage.setItem("medicine", JSON.stringify([newData]));
-            setData([newData]);
-        } else {
-            if (updatedata) {
-                let udata = localdata.map((v) => {
-                    if (v.id === data.id) {
-                        return data;
-                    } else {
-                        return v;
-                    }
-                })
-                localStorage.setItem("medicine", JSON.stringify(udata));
-                setData(udata);
-            } else {
-                localdata.push(newData);
-                localStorage.setItem("medicine", JSON.stringify(localdata));
-                setData(localdata);
-            }
-
+        if(updatedata){
+            dispatch(updateMedicineData(data));
+        }else{
+            dispatch(addMedicineData(data));
         }
-
         setUpdateData(null);
     }
 
     const handleRemove = (id) => {
-        // console.log("AAA", id);
-        let localdata = JSON.parse(localStorage.getItem("medicine"));
-        let fData = localdata.filter((v, i) => v.id !== id);
-        localStorage.setItem("medicine", JSON.stringify(fData));
-        setData(fData);
+        console.log("AAA", id);
+        dispatch(deleteMedicineData(id));
     }
 
     const handleEdit = (data) => {
         setUpdateData(data);
+        console.log(data);
     }
 
 
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Name', width: 200 },
-        { field: 'date', headerName: 'Exp. Date', width: 130 },
+        { field: 'id', headerName: 'ID', width: 30 },
+        { field: 'name', headerName: 'Name', width: 130 },
+        { field: 'expiry', headerName: 'Exp. Date', width: 100 },
         {
             field: 'price',
             headerName: 'Price',
             sortable: false,
-            width: 90,
+            width: 60,
         },
         {
-            field: 'disc',
+            field: 'desc',
             headerName: 'Description',
             sortable: false,
-            width: 200,
+            width: 300,
         },
         {
             field: 'Action',
             headerName: 'Action',
             renderCell: (params) => (
                 <>
-                    <IconButton aria-label="update" color="success" onClick={() => handleEdit(params.row)}>
+                    <IconButton color="success" onClick={() => handleEdit(params.row)}>
                         <EditIcon />
                     </IconButton>
-                    <IconButton aria-label="delete" color="error" onClick={() => handleRemove(params.row.id)}>
+                    <IconButton color="error" onClick={() => handleRemove(params.row.id)}>
                         <DeleteIcon />
                     </IconButton>
                 </>
@@ -108,7 +79,7 @@ export default function Medicine() {
             <AddMedicineForm onHandleSubmit={handleSubmitData} onUpdate={updatedata}/>
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={medicineData.medicineData}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -116,7 +87,7 @@ export default function Medicine() {
                         },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
+                    // checkboxSelection
                 />
             </div>
         </div>

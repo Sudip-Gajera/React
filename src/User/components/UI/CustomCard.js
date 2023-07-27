@@ -1,20 +1,21 @@
 import React from 'react';
 import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle } from 'reactstrap';
 
-function CustomCard({ values }) {
+function CustomCard({ values, btnval, onclick1}) {
     return (
         <div>
             <Card
                 style={{
-                    width: '18rem'
+                    // width: '18rem',
+                    // height: '20rem'
                 }}
             >
-                {
+                {/* {
                     values.url ? <img
                         alt="Sample"
                         src="https://picsum.photos/300/200"
                     /> : null
-                }
+                } */}
                 <CardBody>
                     <CardTitle tag="h5">
                         {values.name}
@@ -26,16 +27,18 @@ function CustomCard({ values }) {
                         {values.price} $
                     </CardSubtitle>
                     <CardText>
-                        {values.disc}
+                        {values.desc}
                     </CardText>
                     <CardText>
-                        Expiry Date: {values.date}
+                        Expiry Date: {values.expiry}
                     </CardText>
                     {
-                        values.btn ? <Button>
-                            Button
+                        btnval ? 
+                        <Button onClick={() => onclick1(values.id)}>
+                            {btnval}
                         </Button> : null
                     }
+
                 </CardBody>
             </Card>
         </div>
