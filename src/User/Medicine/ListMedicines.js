@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomCard from '../components/UI/CustomCard';
 
-function ListMedicines({ mData, handleCart1 }) {
+function ListMedicines({ mData, handleCart1, handleFavorite }) {
     return (
         <>
             {mData.map((v, i) => {
@@ -11,6 +11,7 @@ function ListMedicines({ mData, handleCart1 }) {
                             values={v}
                             btnval={"Add to Cart"}
                             onclick1 = {handleCart1}
+                            favorite = {handleFavorite}
                         />
                     </div>
                 )

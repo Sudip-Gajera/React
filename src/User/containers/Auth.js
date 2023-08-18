@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
 import Heading from '../components/UI/Heading/Heading';
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function Auth(props) {
 
@@ -14,6 +16,41 @@ function Auth(props) {
     const handleLogin = () => {
         let LoginData = localStorage.setItem('login', 'true');
         navigate('/');
+    }
+
+    const handleSignup = (values) => {
+        console.log(values);
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                onAuthStateChanged(auth, (user) => {
+                    sendEmailVerification(auth.currentUser)
+                        .then(() => {
+                            // Email verification sent!
+                            // ...
+                            console.log("Send Email Varification");
+                        })
+                        .catch((error) => {
+                            const errorCode = error.code;
+                            const errorMessage = error.message;
+                            console.log(errorCode, errorMessage);
+                            // ..
+                        });
+                });
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                // ..
+            });
+    }
+
+    const handleForgot = () => {
+
     }
 
     let authObj = {}, initVal = {};
@@ -73,6 +110,10 @@ function Auth(props) {
             action.resetForm();
             if (authtype === 'login') {
                 handleLogin()
+            } else if (authtype === 'signup') {
+                handleSignup(values)
+            } else if (authtype === 'forgot') {
+                handleForgot()
             }
         },
     });

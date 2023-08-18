@@ -104,6 +104,7 @@ export default function MiniDrawer({ children }) {
   const listdata = [
     { lable: 'medicine', icon: <LocalHospitalIcon sx={{ color: '#FF6337'}} />, to: '/Admin/medicine' },
     { lable: 'doctor', icon: <PeopleAltIcon sx={{ color: '#FF6337'}} />, to: '/Admin/doctor' },
+    { lable: 'department', icon: <PeopleAltIcon sx={{ color: '#FF6337'}} />, to: '/Admin/department' },
   ]
 
   return (

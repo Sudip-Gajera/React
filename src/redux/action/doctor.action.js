@@ -1,21 +1,28 @@
+import { deleteDoctorData, getDoctorData, postDoctorData, updateDoctorData } from "../../common/apis/doctor.api";
 import * as ActionType from "../ActionType";
 
 export const getDoctorsData = () => (dispatch) => {
     try {
+
         dispatch(loadingData(true));
-        setTimeout(function(){
-            fetch("http://localhost:3004/doctors")
-            .then((response) => {
-                if(response.ok){
-                    return response.json();
-                }
-                throw new Error("Something wornh");
-            })
-            // .then(res => res.json())
-            .then(data => dispatch({ type: ActionType.GET_DOCTORS, payload: data }))
-            .catch(error => dispatch(errorData(error)))
-        },3000)
-        
+        setTimeout(function () {
+            getDoctorData()
+                .then((response) => dispatch({ type: ActionType.GET_DOCTORS, payload: response.data }))
+                .catch(error => dispatch(errorData(error)))
+
+            //     fetch("http://localhost:3004/doctors")
+            //     .then((response) => {
+            //         if(response.ok){
+            //             return response.json();
+            //         }
+            //         throw new Error("Something wornh");
+            //     })
+            //     // .then(res => res.json())
+            //     .then(data => dispatch({ type: ActionType.GET_DOCTORS, payload: data }))
+            //     .catch(error => dispatch(errorData(error)))
+
+        }, 3000)
+
     } catch (error) {
         console.log(error);
         dispatch(errorData(error));
@@ -25,16 +32,18 @@ export const getDoctorsData = () => (dispatch) => {
 
 export const addDoctorData = (data) => (dispatch) => {
     try {
-        fetch("http://localhost:3004/doctors", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
+        postDoctorData(data)
+            .then((response) => dispatch({ type: ActionType.ADD_DOCTORS, payload: response.data }))
+        // fetch("http://localhost:3004/doctors", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(data),
+        // })
 
-            .then(response => response.json())
-            .then((data) => dispatch({ type: ActionType.ADD_DOCTORS, payload: data }))
+        //     .then(response => response.json())
+        //     .then((data) => dispatch({ type: ActionType.ADD_DOCTORS, payload: data }))
     } catch (error) {
         console.log(error);
     }
@@ -42,11 +51,14 @@ export const addDoctorData = (data) => (dispatch) => {
 
 export const addDoctor = (id) => (dispatch) => {
     try {
-        fetch("http://localhost:3004/doctors/" + id, {
-            method: "DELETE",
-        })
+        deleteDoctorData(id)
             .then(dispatch({ type: ActionType.DELETE_DOCTORS, payload: id }))
             .catch(error => console.log(error))
+        // fetch("http://localhost:3004/doctors/" + id, {
+        //     method: "DELETE",
+        // })
+        //     .then(dispatch({ type: ActionType.DELETE_DOCTORS, payload: id }))
+        //     .catch(error => console.log(error))
     }
     catch (error) {
         console.log(error);
@@ -56,15 +68,18 @@ export const addDoctor = (id) => (dispatch) => {
 
 export const updateData = (data) => (dispatch) => {
     try {
-        fetch("http://localhost:3004/doctors/" + data.id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
+        updateDoctorData(data)
             .then(dispatch({ type: ActionType.UPDATE_DOCTORS, payload: data }))
             .catch(error => console.log(error))
+        // fetch("http://localhost:3004/doctors/" + data.id, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(data),
+        // })
+        //     .then(dispatch({ type: ActionType.UPDATE_DOCTORS, payload: data }))
+        //     .catch(error => console.log(error))
     }
     catch (error) {
         console.log(error);

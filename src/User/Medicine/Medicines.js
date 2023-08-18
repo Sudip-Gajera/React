@@ -3,7 +3,9 @@ import ListMedicines from './ListMedicines';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedicineData } from '../../redux/action/medicine.action';
 import Input from '../components/UI/Input/Input';
-import { addtoCart } from '../../redux/action/cart.action';
+// import { addtoCart } from '../../redux/action/cart.action';
+import { favoriteItem } from '../../redux/action/favorite.actin';
+import { addtocart } from '../../redux/slice/cartSlice';
 
 function Medicines(props) {
     const dispatch = useDispatch();
@@ -16,7 +18,8 @@ function Medicines(props) {
     }, [])
 
     const handleCart = (id) => {
-        dispatch(addtoCart(id));
+        // dispatch(addtoCart(id));
+        dispatch(addtocart({pid: id, qty:1}))
         console.log("handleCart called", id);
     }
 
@@ -33,6 +36,11 @@ function Medicines(props) {
         setFilterData(fData);
     }
 
+    const handleFavorite = (id) => {
+        console.log("favorite called", id);
+        dispatch(favoriteItem(id));
+    }
+
     return (
         <section id="medicines" className="medicines">
             <div className="container">
@@ -47,6 +55,7 @@ function Medicines(props) {
                     <ListMedicines 
                         mData={filterData.length > 0 ? filterData: medicineData.medicineData} 
                         handleCart1 = {handleCart}
+                        handleFavorite = {handleFavorite}
                         />
                 </div>
             </div>

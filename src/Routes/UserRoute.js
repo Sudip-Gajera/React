@@ -16,6 +16,9 @@ import Medicines from '../User/Medicine/Medicines';
 import PrivateRoute from './PrivateRoute';
 import Counter from '../User/containers/counter/Counter';
 import Cart from '../User/containers/cart/Cart';
+import Medicine1 from '../User/Medicine/Medicine1';
+import Cart1 from '../User/containers/cart/Cart1';
+import BookMark from '../User/containers/bookmark/BookMark';
 
 function UserRoute(props) {
     return (
@@ -39,8 +42,11 @@ function UserRoute(props) {
                 <Route path='*' element={<NotFound />} />
                 <Route path='/auth' element={<Auth />} />
                 <Route path='/cart' element={<Cart />} />
+                <Route path='/cart1' element={<Cart1 />} />
+                <Route path='/bookmark' element={<BookMark />} />
+                <Route path='/medicine111' element={<Medicine1 />} />
                 <Route element={<PrivateRoute />}>
-                    <Route path='/medicine' element={<Medicines />} />
+                    <Route path='/medicine' element={<Medicines/>} />
                 </Route>
             </Routes>
             <Footer />

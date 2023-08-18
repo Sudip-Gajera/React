@@ -1822,3 +1822,13 @@ section {
 .main-header {
   height: 138px;
 }
+
+.light{
+  color: black !important;
+  background-color: white !important;
+}
+
+.dark{
+  color: white !important;
+  background-color: black !important;
+}

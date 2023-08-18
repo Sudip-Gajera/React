@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+// import { getDepartmentData } from '../../redux/action/department.action';
+import { fetchDepartment } from '../../redux/slice/departmentSlice';
 
 function Department(props) {
+
+    const dispatch = useDispatch();
+    const data = useSelector(state => state.department)
+
+
+    console.log(data);
+
+    useEffect(() => {
+        // dispatch(getDepartmentData())
+        dispatch(fetchDepartment())
+    }, [])
+
     return (
         <section id="departments" className="departments">
             <div className="container">
@@ -10,7 +25,16 @@ function Department(props) {
                 <div className="row">
                     <div className="col-lg-3">
                         <ul className="nav nav-tabs flex-column">
-                            <li className="nav-item">
+                            {
+                                data.department.map((v,i) => {
+                                    return (
+                                        <li className="nav-item">
+                                            <a className= {i === 0 ? "nav-link active show" : "nav-link"} data-bs-toggle="tab" href={`#tab-${i+1}`}>{v.name}</a>
+                                        </li>
+                                    )
+                                })
+                            }
+                            {/* <li className="nav-item">
                                 <a className="nav-link active show" data-bs-toggle="tab" href="#tab-1">E.N.T</a>
                             </li>
                             <li className="nav-item">
@@ -24,12 +48,29 @@ function Department(props) {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" data-bs-toggle="tab" href="#tab-5">Neurosurgery</a>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     <div className="col-lg-9 mt-4 mt-lg-0">
                         <div className="tab-content">
-                            <div className="tab-pane active show" id="tab-1">
+                            {
+                                data.department.map((v,i) => {
+                                    return (
+                                        <div className= {i === 0 ? "tab-pane active show" : "tab-pane" }  id= {`tab-${i+1}`}>
+                                            <div className="row">
+                                                <div className="col-lg-8 details order-2 order-lg-1">
+                                                    <h3>{v.name}</h3>
+                                                    <p className="fst-italic">{v.desc}</p>
+                                                </div>
+                                                <div className="col-lg-4 text-center order-1 order-lg-2">
+                                                    <img src="../assets/img/departments-1.jpg" alt className="img-fluid" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                            {/* <div className="tab-pane active show" id="tab-1">
                                 <div className="row">
                                     <div className="col-lg-8 details order-2 order-lg-1">
                                         <h3>E.N.T</h3>
@@ -103,7 +144,7 @@ function Department(props) {
                                         <img src="../assets/img/departments-5.jpg" alt className="img-fluid" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

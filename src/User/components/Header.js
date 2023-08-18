@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Links } from './UI/Link/Link.style';
 import Badge from '@mui/material/Badge';
@@ -6,6 +6,8 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector } from 'react-redux';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import { ThemeContext } from '../../context/ThemeContext';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -20,6 +22,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 function Header(props) {
+
+    let theme = useContext(ThemeContext);
+    console.log(theme);
     let login = localStorage.getItem("login");
 
     let cartData = useSelector((state) => state.cart);
@@ -28,12 +33,18 @@ function Header(props) {
         cartCounter = cartData.item.reduce((acc, v, i) => acc + v.qty, 0);
     }
 
+    let data = JSON.parse(localStorage.getItem('cartID'));
+    let count = 0;
+    if (data) {
+        count = data.reduce((acc, v) => acc + v.qty, 0)
+    }
+
     const handleRemove = () => {
         localStorage.removeItem('login');
     }
     return (
         <div className="main-header">
-            <div id="topbar" className="d-flex align-items-center fixed-top">
+            <div id="topbar" className={`d-flex align-items-center fixed-top ${theme.theme}`}>
                 <div className="container d-flex justify-content-between">
                     <div className="contact-info d-flex align-items-center">
                         <i className="bi bi-envelope" /> <Links href="mailto:contact@example.com">cityhospital@example.com</Links>
@@ -47,6 +58,21 @@ function Header(props) {
                                 </StyledBadge>
                             </IconButton>
                         </Link>
+                        <button onClick={() => theme.themeToggle(theme.theme)}>Theme Change</button>
+
+                        <Link to="cart1">
+                            <IconButton aria-label="cart">
+                                <StyledBadge badgeContent={count} color="secondary">
+                                    <ShoppingCartIcon />
+                                </StyledBadge>
+                            </IconButton>
+                        </Link>
+
+
+                        <Link to="bookmark">
+                            <StarOutlinedIcon />
+                        </Link>
+
                         <Links href="#" className="twitter"><i className="bi bi-twitter" /></Links>
                         <Links href="#" className="facebook"><i className="bi bi-facebook" /></Links>
                         <Links href="#" className="instagram"><i className="bi bi-instagram" /></Links>
@@ -71,6 +97,7 @@ function Header(props) {
                             <li><Link class="nav-link scrollto " to="/about">About</Link></li>
                             <li><Link class="nav-link scrollto" to="/contact">Contact</Link></li>
                             <li><Link class="nav-link scrollto" to="/counter">Counter</Link></li>
+                            <li><Link class="nav-link scrollto" to="/medicine111">Medicine111111</Link></li>
                         </ul>
                         <i className="bi bi-list mobile-nav-toggle" />
                     </nav>
